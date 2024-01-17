@@ -1,4 +1,5 @@
 import {
+  GithubAuthProvider,
   GoogleAuthProvider,
   getAuth,
   signInWithPopup,
@@ -10,10 +11,11 @@ const Home = () => {
   const [userDetails, setUserDetails] = useState(null);
 
   const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
+  const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
 
-  const handleLoginButton = () => {
-    signInWithPopup(auth, provider)
+  const handleGoogleLoginButton = () => {
+    signInWithPopup(auth, googleProvider)
       .then((result) => {
         console.log(result.user);
         setUserDetails(result.user);
@@ -22,6 +24,17 @@ const Home = () => {
         console.log(error.message);
       });
   };
+
+  const handleGithubLoginButton = () => {
+    signInWithPopup(auth, githubProvider)
+    .then(result => {
+      console.log(result.user);
+      setUserDetails(result.user)
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
 
   const handleLogOutButton = () => {
     signOut(auth)
@@ -39,9 +52,13 @@ const Home = () => {
       {userDetails ? (
         <button onClick={handleLogOutButton}>LogOut</button>
       ) : (
-        <button onClick={handleLoginButton}>Google Login</button>
+        <div>
+          <button onClick={handleGoogleLoginButton}>Google Login</button>
+          <button onClick={handleGithubLoginButton}>Github Login</button>
+        </div>
       )}
       <p>{userDetails?.displayName}</p>
+      <img src={userDetails?.photoURL} alt="" />
     </div>
   );
 };
