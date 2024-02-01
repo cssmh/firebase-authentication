@@ -27,14 +27,14 @@ const Home = () => {
 
   const handleGithubLoginButton = () => {
     signInWithPopup(auth, githubProvider)
-    .then(result => {
-      console.log(result.user);
-      setUserDetails(result.user)
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  }
+      .then((result) => {
+        console.log(result.user);
+        setUserDetails(result.user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const handleLogOutButton = () => {
     signOut(auth)
